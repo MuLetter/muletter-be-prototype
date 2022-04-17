@@ -1,18 +1,22 @@
+import http from "http";
 import Express from "express";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import routes from "./routes";
 import cors from "cors";
+import SocketConnect from "./Socket";
 
 dotenv.config();
 
 class App {
+  server: http.Server;
   app: Express.Application;
 
   constructor() {
     this.app = Express();
-
     this.SetMW();
+
+    this.server = http.createServer(this.app);
     this.Start();
   }
 
@@ -27,9 +31,11 @@ class App {
 
   Start() {
     const port = process.env.PORT || "80";
-    this.app.listen(port, () => {
+    this.server.listen(port, () => {
       console.log(`[Express port number: ${port}] Server Start Success`);
     });
+
+    SocketConnect(this.server, this.app);
   }
 }
 

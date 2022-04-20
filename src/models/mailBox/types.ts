@@ -17,7 +17,7 @@ export type MailBox = {
   title: string;
   imagePath?: string;
   tracks: Track[];
-  coord?: Coord;
+  point?: Coord;
   createdAt: string;
   updatedAt: string;
   mail?: Mail;

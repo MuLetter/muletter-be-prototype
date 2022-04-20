@@ -1,0 +1,10 @@
+db.MailBox.find({
+  $and: [
+    {
+      $and: [{ "point.x": { $gte: 87 } }, { "point.x": { $lte: 89 } }],
+    },
+    {
+      "point.y": { $lte: 30 },
+    },
+  ],
+});

@@ -71,13 +71,14 @@ class MailBoxRouter {
       async (req: Express.Request, res: Express.Response) => {
         try {
           const imagePath = req.file && "/static/" + req.file.filename;
-          let { title, tracks } = req.body;
+          let { title, description, tracks } = req.body;
           tracks = JSON.parse(tracks) as Track;
           const createdAt = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 
           const _mailBox: MailBox = {
             title,
             tracks,
+            description,
             imagePath,
             createdAt,
             updatedAt: createdAt,

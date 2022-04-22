@@ -16,6 +16,7 @@ const trackSchema = new Schema<Track>({
 const schema = new Schema<MailBox>(
   {
     title: { type: String, required: true },
+    description: { type: String, required: true },
     imagePath: { type: String, required: false },
     tracks: [trackSchema],
     point: coordSchema,

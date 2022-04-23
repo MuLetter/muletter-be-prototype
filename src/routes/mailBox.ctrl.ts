@@ -42,6 +42,7 @@ class MailBoxRouter {
       "/:id",
       async (req: Express.Request, res: Express.Response) => {
         const { id } = req.params;
+        const { page } = req.query;
         const mailBox = await MailBoxModel.findOne({
           _id: id,
         });
@@ -50,10 +51,12 @@ class MailBoxRouter {
         })
           .sort({ createdAt: -1 })
           .limit(1);
+        let _page = page ? parseInt(page as string) : 1;
+        let lastPage = Math.floor(mail[0].tracks.length / 10) + 1;
 
         if (mail.length === 1) {
           mail = mail[0];
-          mail.tracks = mail.tracks.slice(0, 10);
+          mail.tracks = mail.tracks.slice(10 * (_page - 1), 10 * _page);
         } else {
           mail = null;
         }
@@ -61,6 +64,8 @@ class MailBoxRouter {
         return res.status(200).json({
           mailBox,
           mail,
+          page: _page,
+          lastPage,
         });
       }
     );
